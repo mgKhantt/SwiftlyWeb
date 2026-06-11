@@ -31,24 +31,54 @@ targets: [
 3. Click `Add Package`
 ---
 
-## Usage
+## Generate Static HTML
 
-### Setup
+SwiftlyWeb can also generate HTML files without launching a local server.
 
-1. In Xcode: `File` → `New` → `Project` → `macOS` → `Command Line Tool`
-2. Add the package: `File` → `Add Package Dependencies` → paste `https://github.com/mgKhantt/SwiftlyWeb.git`
-3. In `main.swift`:
+### Build and Export
 
 ```swift
 import SwiftlyWeb
 
-HTMLPage {
-    H1("Hello World").color("steelblue").fontSize(40)
+HTMLPage.build {
+    H1("Hello World")
+        .color("steelblue")
+        .fontSize(40)
+
     P("Built with SwiftlyWeb.")
 }
+.exportToFile()
 ```
 
-4. Press `Cmd+R` — browser opens automatically.
+This creates an `index.html` file in the current working directory.
+
+### Export to a Custom Location
+
+```swift
+import SwiftlyWeb
+
+HTMLPage.build {
+    H1("Hello World")
+        .color("steelblue")
+        .fontSize(40)
+
+    P("Built with SwiftlyWeb.")
+}
+.exportToFile("/Users/khant/Desktop/website/index.html")
+```
+
+### Example Use Cases
+
+* Generate static websites
+* Create landing pages
+* Export HTML for deployment
+* Produce HTML reports and documents
+* Build websites without running a development server
+
+> `HTMLPage { ... }` starts a local development server and automatically opens your browser.
+>
+> `HTMLPage.build { ... }` generates HTML content that can be exported directly to a file.
+
 ---
 
 ## Components
