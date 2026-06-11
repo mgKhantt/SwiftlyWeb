@@ -1,16 +1,6 @@
-//
-//  File.swift
-//  SwiftlyWeb
-//
-//  Created by Khant Phone Naing  on 11/06/2026.
-//
-
 import Foundation
-
-public enum RunMode {
-    case file       // swift run
-    case serve      // swift run -- --serve
-}
+#if canImport(Foundation) && os(macOS)
+import Foundation
 
 public struct HTMLPage {
     let children: [HTMLElement]
@@ -35,7 +25,7 @@ public struct HTMLPage {
         <html>
         <head>
             <meta charset="UTF-8">
-            <title>SwiftWeb</title>
+            <title>SwiftlyWeb</title>
         </head>
         <body>
             \(body)
@@ -49,7 +39,6 @@ public struct HTMLPage {
         return args.contains("serve") ? .serve : .file
     }
 
-    // ── Opens as file:// ──────────────────────────────
     private func exportToFile(_ path: String) {
         let html = render()
         do {
@@ -64,7 +53,6 @@ public struct HTMLPage {
         }
     }
 
-    // ── Serves via localhost:8080 ─────────────────────
     private func serveLocally(_ path: String) {
         let html = render()
         do {
@@ -91,3 +79,41 @@ public struct HTMLPage {
         }
     }
 }
+
+public enum RunMode {
+    case file
+    case serve
+}
+
+#else
+
+// Non-macOS stub — render only, no file/server output
+public struct HTMLPage {
+    let children: [HTMLElement]
+
+    @discardableResult
+    public init(
+        output path: String = "index.html",
+        @HTMLBuilder content: () -> [HTMLElement]
+    ) {
+        self.children = content()
+    }
+
+    public func render() -> String {
+        let body = children.map { $0.render() }.joined(separator: "\n")
+        return """
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>SwiftlyWeb</title>
+        </head>
+        <body>
+            \(body)
+        </body>
+        </html>
+        """
+    }
+}
+
+#endif
