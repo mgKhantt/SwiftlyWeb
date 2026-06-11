@@ -5,12 +5,82 @@
     <title>SwiftWeb</title>
 </head>
 <body>
-    <div style="display: flex; gap: 16px; flex-direction: column; padding: 40px">
-<h1 style="font-size: 40px; color: steelblue">SwiftWeb Framework</h1>
-<div style="padding: 20px; background-color: #f5f5f5; border-radius: 12px">
-<p style="font-size: 18px; color: gray">Build web UIs with pure Swift.</p>
-<a href="https://swift.org" target="_blank" style="font-size: 16px; color: steelblue">Visit Swift.org</a>
+    <main style="padding: 40px">
+<h2 style="color: steelblue">SwiftlyWeb</h2>
+<p>Pure Swift web framework.</p>
+<ul>
+<li><p>Fast</p></li>
+<li><p>Native Swift</p></li>
+<li><p>No dependencies</p></li>
+</ul>
+<table style="width: 100%; border-collapse: collapse">
+<tr>
+<th style="border: 1px solid #ccc; padding: 12px">Name</th>
+<th style="border: 1px solid #ccc; padding: 12px">Role</th>
+</tr>
+<tr>
+<td style="padding: 12px; border: 1px solid #ccc">Khant</td>
+<td style="border: 1px solid #ccc; padding: 12px">iOS Dev</td>
+</tr>
+</table>
+<form id="contact-form">
+<div style="gap: 12px; display: flex; flex-direction: column">
+<label for="name" style="font-weight: 600">Your Name</label>
+<input type="text" id="name" name="name" placeholder="Enter your name" autocomplete="name" style="width: 300px; padding: 10px; border-radius: 8px">
+<span id="error-name" style="color: red; font-size: 13px"></span>
+<label for="email" style="font-weight: 600">Your Email</label>
+<input type="email" id="email" name="email" placeholder="Enter your email" autocomplete="email" style="padding: 10px; border-radius: 8px; width: 300px">
+<span id="error-email" style="font-size: 13px; color: red"></span>
+<button type="submit" onclick="return validateForm()" style="cursor: pointer; color: white; padding: 12px; background-color: steelblue; border-radius: 8px; border: none">Submit</button>
+<button type="button" onclick="clearErrors()" style="cursor: pointer; color: steelblue; border: 1px solid steelblue; background-color: white; border-radius: 8px; padding: 10px">Clear Form</button>
 </div>
-</div>
+</form>
+</main>
+<script>
+    function validateForm() {
+        let valid = true
+
+        const name = document.getElementById('name')
+        const nameError = document.getElementById('error-name')
+        if (!name.value.trim()) {
+            nameError.textContent = '⚠️ Name is required'
+            name.style.borderColor = 'red'
+            valid = false
+        } else {
+            nameError.textContent = ''
+            name.style.borderColor = ''
+        }
+
+        const email = document.getElementById('email')
+        const emailError = document.getElementById('error-email')
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        if (!email.value.trim()) {
+            emailError.textContent = '⚠️ Email is required'
+            email.style.borderColor = 'red'
+            valid = false
+        } else if (!emailRegex.test(email.value)) {
+            emailError.textContent = '⚠️ Enter a valid email address'
+            email.style.borderColor = 'red'
+            valid = false
+        } else {
+            emailError.textContent = ''
+            email.style.borderColor = ''
+        }
+
+        return valid
+    }
+
+    function clearErrors() {
+        // Clear input values
+        document.getElementById('name').value = ''
+        document.getElementById('email').value = ''
+        // Clear error messages
+        document.getElementById('error-name').textContent = ''
+        document.getElementById('error-email').textContent = ''
+        // Clear border colors
+        document.getElementById('name').style.borderColor = ''
+        document.getElementById('email').style.borderColor = ''
+    }
+</script>
 </body>
 </html>
