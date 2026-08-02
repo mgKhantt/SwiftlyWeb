@@ -19,8 +19,11 @@ public struct Link: HTMLElement {
     }
 
     public func render() -> String {
-        let styleAttr = styles.isEmpty ? "" : " style=\"\(styles.map { "\($0): \($1)" }.joined(separator: "; "))\""
-        let target = openInNewTab ? " target=\"_blank\"" : ""
+        let styleAttr = styles.isEmpty ? "" :
+            " style=\"\(styles.map { "\($0): \($1)" }.joined(separator: "; "))\""
+
+        let target = openInNewTab ? " target=\"_blank\" rel=\"noopener noreferrer\"" : ""
+
         return "<a href=\"\(href)\"\(target)\(styleAttr)>\(text)</a>"
     }
 
