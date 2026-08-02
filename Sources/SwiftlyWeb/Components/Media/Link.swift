@@ -15,7 +15,12 @@ public struct Link: HTMLElement {
 
     public init(_ text: String, href: String) {
         self.text = text
-        self.href = href
+        
+        if href.hasPrefix("http://") || href.hasPrefix("https://") {
+            self.href = href
+        } else {
+            self.href = "https://" + href
+        }
     }
 
     public func render() -> String {
